@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Beethoven roadshow · Avans</title>
+  <style>
+    :root { --red:#c6002b; --red-dark:#9f0026; --ink:#171414; --paper:#f6f4f0; --white:#fff; --lilac:#dfbdf7; --muted:#55504e; --line:#dedad4; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:16px/1.56 Arial,Helvetica,sans-serif; }
+    a { color:var(--red-dark); text-underline-offset:3px; }
+    a:hover { color:#620018; }
+    a:focus-visible,button:focus-visible { outline:3px solid var(--red); outline-offset:4px; border-radius:3px; }
+    img { display:block; max-width:100%; }
+    .wrap { width:min(1160px,calc(100% - 36px)); margin:auto; }
+    .top { background:var(--paper); border-bottom:1px solid var(--line); }
+    .top .wrap { display:flex; align-items:center; justify-content:space-between; gap:25px; min-height:75px; }
+    .logo { width:150px; height:auto; }
+    .top nav { display:flex; flex-wrap:wrap; gap:8px 24px; font-size:.9rem; font-weight:750; }
+    .top nav a { color:var(--ink); text-decoration:none; }
+    .hero { overflow:hidden; background:var(--lilac); }
+    .hero .wrap { display:grid; grid-template-columns:.92fr 1.08fr; align-items:center; gap:36px; min-height:500px; padding-top:42px; padding-bottom:42px; }
+    .kicker { margin:0 0 13px; color:var(--red-dark); font-size:.76rem; font-weight:850; text-transform:uppercase; letter-spacing:.14em; }
+    h1,h2,h3 { line-height:1.08; letter-spacing:-.045em; }
+    h1 { max-width:650px; margin:0 0 20px; font-size:clamp(3.4rem,7vw,6.6rem); text-transform:uppercase; }
+    h2 { margin:0 0 14px; font-size:clamp(2rem,4vw,3.2rem); }
+    h3 { margin:0 0 8px; font-size:1.2rem; }
+    p { margin-top:0; }
+    .hero .lead { max-width:540px; font-size:1.18rem; }
+    .cta { display:inline-flex; align-items:center; padding:11px 20px; border-radius:999px; color:#fff; background:var(--ink); font-weight:750; text-decoration:none; }
+    .cta:hover { color:#fff; background:var(--red-dark); }
+    .film { position:relative; padding:23px 0; }
+    .film:before { content:""; position:absolute; inset:0 -14px 12px 30px; transform:rotate(-3deg); border-radius:70px 12px 70px 12px; background:var(--red); }
+    .film video { position:relative; display:block; width:100%; aspect-ratio:16/9; border:6px solid #fff; border-radius:16px; background:#000; box-shadow:0 20px 36px rgba(0,0,0,.15); }
+    .film-start { position:absolute; z-index:2; top:46%; left:50%; transform:translate(-50%,-50%); padding:13px 20px; border:2px solid #fff; border-radius:999px; background:var(--red); color:#fff; box-shadow:0 8px 20px rgba(0,0,0,.25); font:inherit; font-weight:850; white-space:nowrap; cursor:pointer; }
+    .film-start:hover { background:var(--red-dark); }
+    .film-start[hidden] { display:none; }
+    .film p { position:relative; margin:10px 0 0; font-size:.83rem; }
+    .intro { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:15px; padding:31px 0 12px; }
+    .intro p { max-width:640px; margin:0; font-size:1.08rem; }
+    .intro-nav { display:flex; flex-wrap:wrap; gap:8px; }
+    .intro-nav a { padding:8px 12px; border:1px solid var(--line); border-radius:999px; background:#fff; color:var(--ink); font-size:.84rem; font-weight:750; text-decoration:none; }
+    .journey { position:relative; padding:15px 0 5px 127px; }
+    .road { position:absolute; inset:13px auto 0 24px; width:72px; border-radius:36px; background:#343334; overflow:visible; }
+    .road:before { content:""; position:absolute; inset:0 auto 0 34px; width:4px; background:repeating-linear-gradient(to bottom,#f7e6b4 0 29px,transparent 29px 62px); }
+    .bus { position:absolute; z-index:3; top:14px; left:1px; width:70px; height:87px; filter:drop-shadow(0 7px 7px rgba(0,0,0,.3)); pointer-events:none; }
+    .bus svg { display:block; width:70px; height:87px; }
+    .stop { position:relative; scroll-margin-top:18px; margin:0 0 26px; padding:25px; border:1px solid var(--line); border-radius:23px 23px 23px 6px; background:#fff; box-shadow:0 9px 26px rgba(29,20,18,.055); }
+    .stop:before { content:""; position:absolute; left:-81px; top:35px; width:16px; height:16px; border:5px solid var(--red); border-radius:50%; background:#fff; box-shadow:0 0 0 5px var(--paper); }
+    .stop.active { border-color:#d39ba9; box-shadow:0 10px 30px rgba(198,0,43,.11); }
+    .stop-top { display:flex; align-items:center; flex-wrap:wrap; gap:8px 15px; margin-bottom:16px; }
+    .time { display:inline-block; padding:5px 11px; border-radius:999px; background:var(--red); color:#fff; font-size:.8rem; font-weight:850; }
+    .stage { color:var(--red-dark); font-size:.75rem; font-weight:850; text-transform:uppercase; letter-spacing:.12em; }
+    .stop-grid { display:grid; grid-template-columns:1.06fr .94fr; gap:27px; align-items:start; }
+    .stop-grid > div { min-width:0; }
+    .stop .lead { max-width:670px; color:#3f3a39; font-size:1.06rem; }
+    .points { margin:15px 0 20px; padding:0; list-style:none; display:grid; gap:9px; }
+    .points li { position:relative; padding-left:20px; }
+    .points li:before { content:""; position:absolute; top:.57em; left:0; width:8px; height:8px; border-radius:50%; background:var(--red); }
+    .visit-note { margin:18px 0; padding:13px 16px; border-left:5px solid var(--red); border-radius:0 9px 9px 0; background:#fff3f6; }
+    .media { margin:0; }
+    .media img { width:100%; max-height:390px; object-fit:cover; border-radius:15px 15px 15px 4px; }
+    .double-photo { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .double-photo img { height:240px; object-fit:cover; border-radius:13px; }
+    .sources { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+    .sources a { display:inline-block; padding:8px 11px; border:1px solid #e5b5c2; border-radius:9px; background:#fff8fa; font-size:.86rem; font-weight:750; text-decoration:none; }
+    .sources a:hover { border-color:var(--red); }
+    .glossy { display:grid; grid-template-columns:92px 1fr; gap:15px; align-items:center; max-width:590px; margin:20px 0 0; padding:13px; border:1px solid var(--line); border-radius:14px; background:#fff8fa; }
+    .glossy img { width:92px; height:130px; object-fit:cover; border-radius:5px; box-shadow:0 5px 11px rgba(0,0,0,.14); }
+    .glossy h3 { margin-bottom:4px; }
+    .glossy p { margin:0 0 8px; color:var(--muted); font-size:.9rem; }
+    .glossy a { font-size:.9rem; font-weight:750; }
+    .quiet { background:#f8edf9; }
+    .quiet .stop-grid { grid-template-columns:1fr; }
+    .beyond { margin:20px 0 45px; padding:31px; border-radius:27px 7px 27px 7px; background:var(--lilac); }
+    .beyond > p { max-width:760px; }
+    .beyond-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; margin-top:22px; }
+    .beyond-grid article { padding:20px; border-radius:14px; background:#fff; }
+    .beyond-grid .date { color:var(--red-dark); font-size:.74rem; font-weight:850; letter-spacing:.1em; text-transform:uppercase; }
+    .beyond-grid p { color:var(--muted); }
+    .beyond-grid a { font-weight:750; }
+    footer { padding:22px 0 35px; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; }
+    @media(max-width:800px) { .hero .wrap { grid-template-columns:1fr; gap:5px; } .hero { min-height:0; } .film { max-width:650px; padding-bottom:40px; } .stop-grid { grid-template-columns:1fr; } .media img { max-height:350px; } .beyond-grid { grid-template-columns:1fr; } }
+    @media(max-width:580px) { .top .wrap { align-items:flex-start; flex-direction:column; padding:14px 0; } .hero .wrap { padding-top:31px; } .journey { padding-left:64px; } .road { left:7px; width:41px; } .road:before { left:19px; width:3px; } .bus { left:-8px; width:58px; height:73px; } .bus svg { width:58px; height:73px; } .stop { padding:17px; } .stop:before { left:-44px; top:29px; width:12px; height:12px; border-width:4px; } .double-photo { grid-template-columns:1fr; } .double-photo img { height:210px; } .glossy { grid-template-columns:70px 1fr; gap:10px; } .glossy img { width:70px; height:99px; } .beyond { padding:23px; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    @media print { .road,.intro-nav,.cta,.film,footer { display:none; } .journey { padding-left:0; } .stop { break-inside:avoid; box-shadow:none; } .stop:before { display:none; } }
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap"><img class="logo" src="avans-logo.svg" alt="Avans Hogeschool"><nav aria-label="Naar de haltes"><a href="#route">De route</a><a href="#brainport">Brainport</a><a href="#fontys">Fontys</a><a href="#vdl">VDL IM</a><a href="#verder">Verder</a></nav></div></header>
+  <section class="hero" aria-labelledby="titel"><div class="wrap"><div><p class="kicker">Beethoven studiedag · 1 oktober 2026</p><h1 id="titel">Rijd de dag nog eens mee.</h1><p class="lead">Een roadshow langs Brainport Development, Fontys en VDL IM. Bij iedere halte vind je foto’s, de kern van de presentaties en links naar de bronnen.</p><a class="cta" href="#route">Volg de rode bus ↓</a></div><div class="film"><video id="brainport-film" autoplay playsinline controls preload="auto" poster="fotos/brainport-presentatie.jpeg" aria-label="Brainport technische animatie met Engelse ondertitels"><source src="funk-e___brainport_-_technische_animatie_final_%2B_eng_subs.mp4" type="video/mp4">Deze browser kan de film niet afspelen.</video><button class="film-start" id="film-start" type="button">▶ Start film met geluid</button><p>Geluid staat aan. Blokkeert je browser automatisch afspelen? Gebruik de knop op de film. <a href="funk-e___brainport_-_technische_animatie_final_%2B_eng_subs.mp4">Open de film als bestand</a>.</p></div></div></section>
+  <main class="wrap">
+    <div class="intro" id="route"><p>Van vertrek tot terugkomst: scroll langs de haltes en stap in waar je meer wilt weten.</p><nav class="intro-nav" aria-label="Spring naar een halte"><a href="#vertrek">Vertrek</a><a href="#brainport">Brainport</a><a href="#fontys">Fontys</a><a href="#lunch">Lunch</a><a href="#vdl">VDL IM</a><a href="#terug">Terugreis</a></nav></div>
+    <div class="journey" id="journey">
+      <div class="road" aria-hidden="true"><div class="bus" id="bus"><svg viewBox="0 0 72 90" role="presentation"><rect x="3" y="20" width="8" height="45" rx="4" fill="#171414"/><rect x="61" y="20" width="8" height="45" rx="4" fill="#171414"/><rect x="10" y="3" width="52" height="80" rx="14" fill="#c6002b" stroke="#82001c" stroke-width="2"/><rect x="17" y="14" width="38" height="32" rx="6" fill="#d8f0f4"/><path d="M20 40 L52 20" stroke="#fff" stroke-width="3" opacity=".7"/><rect x="19" y="54" width="34" height="7" rx="3" fill="#7e001c"/><circle cx="22" cy="72" r="5" fill="#fff0b6"/><circle cx="50" cy="72" r="5" fill="#fff0b6"/><rect x="27" y="69" width="18" height="4" rx="2" fill="#301e1e"/></svg></div></div>
+      <section class="stop" id="vertrek" aria-labelledby="vertrek-titel"><div class="stop-top"><span class="time">08:45 → 09:00</span><span class="stage">Start · Den Bosch</span></div><div class="stop-grid"><div><h2 id="vertrek-titel">Instappen bij OWB 215</h2><p class="lead">De groep verzamelt in Den Bosch. Om 09:00 vertrekt de bus naar de eerste halte.</p><p>Net een schoolreis: bij het instappen kreeg iedereen een tasje met iets te eten en te drinken. Daarin zat ook een glossy over de bredere context van Beethoven en de mensen die vanuit Avans meewerken.</p><div class="glossy"><img src="fotos/roadshow-glossy-cover.png" alt="Omslag van de glossy Roadshow Beethoven 2026" loading="lazy"><div><h3>Roadshow Beethoven 2026</h3><p>Het Beethovenverhaal, voorbeelden uit Avans en de mensen achter het programma.</p><a href="2614233_avans_boekje_A5_4.pdf">Bekijk de glossy (PDF) →</a></div></div></div><figure class="media"><div class="double-photo"><img src="fotos/bus-instappen.jpeg" alt="Een collega stapt in de touringcar" loading="lazy"><img src="fotos/bus-onderweg.jpeg" alt="Collega’s samen in de bus" loading="lazy"></div></figure></div></section>
+      <section class="stop" id="brainport" aria-labelledby="brainport-titel"><div class="stop-top"><span class="time">09:30</span><span class="stage">Halte 1 · Brainport Development</span></div><div class="stop-grid"><div><h2 id="brainport-titel">De talentopgave achter Beethoven</h2><p class="lead">Brainport plaatste de studiedag in de bredere opgave voor de microchipsector en de regionale arbeidsmarkt.</p><ul class="points"><li>De presentatie noemt een landelijke behoefte van <strong>38.000 arbeidsplaatsen in semicon tot 2030</strong>, exclusief vervangingsvraag. Het gaat om mbo-, hbo- en wo-niveau.</li><li>De aanpak verbindt werving met betere overgangen tussen voortgezet en vervolgonderwijs en met behoud van afgestudeerden in de regio.</li><li>Brainport Academy koppelt de vraag uit de industrie aan doelgroepen, passend opleidingsaanbod en matchmaking.</li></ul><div class="sources"><a href="Presentatie%20Onderwijs%20%26%20Arbeidsmarkt.pdf">Presentatie Onderwijs &amp; Arbeidsmarkt (PDF) →</a><a href="funk-e___brainport_-_technische_animatie_final_%2B_eng_subs.mp4">Brainport-film →</a><a href="https://www.brainportacademy.nl/">Brainport Academy →</a></div></div><figure class="media"><img src="fotos/brainport-presentatie.jpeg" alt="Presentatie over Brainport Eindhoven voor de groep" loading="lazy"></figure></div></section>
+      <section class="stop" id="fontys" aria-labelledby="fontys-titel"><div class="stop-top"><span class="time">09:30</span><span class="stage">Halte 2 · Fontys</span></div><div class="stop-grid"><div><h2 id="fontys-titel">Van interesse naar instroom</h2><p class="lead">Bij Fontys ging het over samenwerking rond Beethoven: jongeren bereiken, goede studiekeuzes mogelijk maken en de aansluiting in de onderwijsketen verbeteren.</p><ul class="points"><li><strong>Werving:</strong> de campagne Spelbrekers gebruikt gaming en korte video’s om jongeren van 12 tot 18 jaar nieuwsgierig te maken naar techniek en ICT. De eerste fase richt zich op zichtbaarheid; vanaf mei 2027 verschuift de nadruk naar studiekeuze.</li><li><strong>Aansluiting:</strong> activiteiten vóór de profiel- en studiekeuze en samenwerking tussen vo, mbo en hbo moeten doorstroom ondersteunen en uitval in bètatechnische opleidingen verminderen.</li><li><strong>Uitwisseling:</strong> de gedeelde presentatie laat zien hoe partners de groei van technisch talent, prognoses en de programmaorganisatie met elkaar verbinden.</li></ul><div class="sources"><a href="20261001%20Uitwisseling%20Beethoven%20-%20Avans.pdf">Uitwisseling Avans–Fontys (PDF) →</a><a href="20261001%20Beethoven%20werving%20tbv%20bezoek%20Avans%20-%20zonder%20videos%20%20-%20%20Alleen-lezen.pdf">Fontys werving (PDF) →</a><a href="Beethoven%20update%20aansluiting%20september%20Avans%202026%20Aansluiting%20%20-%20%20Alleen-lezen.pdf">Fontys aansluiting (PDF) →</a></div></div><figure class="media"><img src="fotos/fontys-uitwisseling.jpeg" alt="Sprekers tijdens de Beethoven-uitwisseling bij Fontys" loading="lazy"></figure></div></section>
+      <section class="stop quiet" id="lunch" aria-labelledby="lunch-titel"><div class="stop-top"><span class="time">13:00</span><span class="stage">Tussenstop</span></div><div class="stop-grid"><div><h2 id="lunch-titel">Lunch &amp; gesprek</h2><p class="lead">Tijd om de ochtend te laten bezinken en met collega’s ideeën uit te wisselen.</p></div></div></section>
+      <section class="stop" id="vdl" aria-labelledby="vdl-titel"><div class="stop-top"><span class="time">14:30</span><span class="stage">Halte 3 · VDL IM</span></div><div class="stop-grid"><div><h2 id="vdl-titel">Van technologie naar maakbaarheid</h2><p class="lead">Het middagbezoek brengt de groep naar VDL Industrial Modules en de praktijk van de hightech maakindustrie.</p><ul class="points"><li>VDL IM brengt engineering en protobouw samen met assemblage en seriematige productie: van technisch idee naar maakbare oplossing.</li><li>Groei in de hightech- en semiconindustrie vraagt om mensen met actuele technische kennis én om ruimte om te blijven leren.</li></ul><p class="visit-note"><strong>Wat ons opviel tijdens het bezoek:</strong> VDL IM heeft veel vrouwen aan de techniek weten te verbinden. Het bedrijf is bovendien met het onderwijs in gesprek over een tweede leven voor machines uit de coronatijd, zodat die kunnen bijdragen aan het opleiden van nieuwe mensen en aan ons onderwijs.</p><div class="sources"><a href="2614233_avans_boekje_A5_4.pdf#page=23">Lees VDL IM in de glossy (p. 23–25) →</a></div></div><figure class="media"><img src="fotos/vdl-im-bezoek.jpeg" alt="De groep bezoekt de werkplaats bij VDL IM" loading="lazy"></figure></div></section>
+      <section class="stop" id="terug" aria-labelledby="terug-titel"><div class="stop-top"><span class="time">16:30 → 17:30</span><span class="stage">Eindhalte · Den Bosch</span></div><div class="stop-grid"><div><h2 id="terug-titel">Terug met nieuwe inzichten</h2><p class="lead">Om 16:30 vertrekt de bus. Uiterlijk om 17:30 is de groep terug in Den Bosch.</p><p>De rode draad van de dag: de ontwikkeling van technisch talent vraagt om samenwerking tussen onderwijs, bedrijven en de regio.</p></div><figure class="media"><img src="fotos/groep-bij-bus.jpeg" alt="Groepsfoto van de deelnemers voor de touringcar" loading="lazy"></figure></div></section>
+    </div>
+    <section class="beyond" id="verder" aria-labelledby="verder-titel"><p class="kicker">Blijf aanhaken</p><h2 id="verder-titel">De route gaat verder</h2><p>We zijn door onze partners uitgenodigd voor de volgende evenementen. Ook na de studiedag zijn er momenten om kennis uit te wisselen en de ontwikkelingen in de regio te volgen. Via Brainport Academy kun je je daarnaast verder verdiepen.</p><div class="beyond-grid"><article><span class="date">18 november 2026</span><h3>Grenzeloos Goed Opgroeien</h3><p>Congres over internationalisering van de regio en de betekenis voor onderwijs.</p><a href="https://brainporteindhoven.com/nl/evenementen/congres-grenzeloos-goed-opgroeien-2026">Meer over het congres →</a></article><article><span class="date">27 januari 2027</span><h3>Kennisfestival Onderwijs &amp; Technologie</h3><p>Ideeën en ontmoetingen rond techniek in het onderwijs.</p><a href="https://brainporteindhoven.com/nl/evenementen/kennisfestival-2027">Meer over het festival →</a></article><article><span class="date">Doorlopend</span><h3>Brainport Academy</h3><p>Informatie over vraagarticulatie en kwartaalinzichten rond vacatures.</p><a href="https://www.brainportacademy.nl/">Ga naar Brainport Academy →</a></article></div></section>
+  </main>
+  <footer><div class="wrap">Beethoven studiedag · Avans · 1 oktober 2026</div></footer>
+  <script>
+    const film = document.getElementById('brainport-film');
+    const filmStart = document.getElementById('film-start');
+    film.muted = false;
+    film.volume = 1;
+    film.play().then(() => { filmStart.hidden = true; }).catch(() => {
+      film.pause();
+      film.currentTime = 0;
+      filmStart.hidden = false;
+    });
+    filmStart.addEventListener('click', () => {
+      film.muted = false;
+      film.currentTime = 0;
+      film.play().then(() => { filmStart.hidden = true; }).catch(() => {});
+    });
+    const journey = document.getElementById('journey');
+    const bus = document.getElementById('bus');
+    const stops = [...journey.querySelectorAll('.stop')];
+    let queued = false;
+    function updateRoute() {
+      const journeyTop = journey.getBoundingClientRect().top;
+      const desired = window.innerHeight * 0.38 - journeyTop;
+      const max = Math.max(14, journey.offsetHeight - bus.offsetHeight - 14);
+      bus.style.top = `${Math.min(max, Math.max(14, desired))}px`;
+      const activeIndex = Math.max(0, stops.findLastIndex(stop => stop.getBoundingClientRect().top <= window.innerHeight * 0.42));
+      stops.forEach((stop, index) => stop.classList.toggle('active', index === activeIndex));
+      queued = false;
+    }
+    function requestRouteUpdate() {
+      if (!queued) { queued = true; requestAnimationFrame(updateRoute); }
+    }
+    addEventListener('scroll', requestRouteUpdate, {passive:true});
+    addEventListener('resize', requestRouteUpdate);
+    updateRoute();
+  </script>
+</body>
+</html>
